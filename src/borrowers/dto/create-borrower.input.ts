@@ -1,7 +1,20 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field, Float } from '@nestjs/graphql';
+import { IsString, IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
 
 @InputType()
 export class CreateBorrowerInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field()
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @Field(() => String, { nullable: true })
+  @IsString()
+  @IsOptional()
+  phoneNumber?: string;
+
+  @Field(() => Float, { nullable: true })
+  @IsNumber()
+  @IsOptional()
+  score?: number;
 }

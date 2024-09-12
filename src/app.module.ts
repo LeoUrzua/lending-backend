@@ -25,7 +25,7 @@ import { PaymentsModule } from './payments/payments.module';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: true,
-      debug: true,
+      debug: false,
     }),
     BorrowersModule,
     LoansModule,
@@ -34,4 +34,4 @@ import { PaymentsModule } from './payments/payments.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

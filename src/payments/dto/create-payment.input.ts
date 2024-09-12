@@ -1,7 +1,20 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field, Float, ID } from '@nestjs/graphql';
+import { IsUUID, IsNotEmpty, IsNumber, IsDateString } from 'class-validator';
 
 @InputType()
 export class CreatePaymentInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => ID)
+  @IsUUID()
+  @IsNotEmpty()
+  loanId: string;
+
+  @Field(() => Float)
+  @IsNumber()
+  @IsNotEmpty()
+  amountPaid: number;
+
+  @Field()
+  @IsDateString()
+  @IsNotEmpty()
+  paymentDate: string;
 }

@@ -15,7 +15,7 @@ export class Borrower {
 
   @Field()
   @Column()
-  phoneNumber: string;
+  phoneNumber?: string;
 
   @Field()
   @Column({ type: 'float', default: 0 })

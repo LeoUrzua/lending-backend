@@ -1,26 +1,59 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBorrowerInput } from './dto/create-borrower.input';
 import { UpdateBorrowerInput } from './dto/update-borrower.input';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Borrower } from './entities/borrower.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BorrowersService {
-  create(createBorrowerInput: CreateBorrowerInput) {
-    return 'This action adds a new borrower';
+  constructor(
+    @InjectRepository(Borrower)
+    private borrowerRepository: Repository<Borrower>,
+  ) { }
+
+  async create(createBorrowerInput: CreateBorrowerInput): Promise<Borrower> {
+    const newBorrower = this.borrowerRepository.create(createBorrowerInput);
+
+    return this.borrowerRepository.save(newBorrower);
   }
 
-  findAll() {
-    return `This action returns all borrowers`;
+  async findAll() {
+    return this.borrowerRepository.find({
+      relations: ['loans'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} borrower`;
+  async findOne(id: string) {
+    return this.borrowerRepository.findOne({
+      where: { id },
+      relations: ['loans'],
+    });
   }
 
-  update(id: number, updateBorrowerInput: UpdateBorrowerInput) {
-    return `This action updates a #${id} borrower`;
+  async update(id: string, updateBorrowerInput: UpdateBorrowerInput) {
+    const borrower = await this.borrowerRepository.find({
+      where: { id },
+    });
+
+    if (!borrower) {
+      throw new Error('Borrower not found');
+    }
+
+    Object.assign(borrower, updateBorrowerInput);
+    return this.borrowerRepository.save(borrower);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} borrower`;
+  async remove(id: string) {
+    const borrower = this.borrowerRepository.find({
+      where: { id },
+    });
+
+    if (!borrower) {
+      throw new Error('Borrower not found');
+    }
+
+    await this.borrowerRepository.delete(id);
+    return borrower;
   }
 }

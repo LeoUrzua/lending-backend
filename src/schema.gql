@@ -38,54 +38,61 @@ type Borrower {
 
 type Query {
   borrowers: [Borrower!]!
-  borrower(id: Int!): Borrower!
+  borrower(id: ID!): Borrower!
   loans: [Loan!]!
-  loan(id: Int!): Loan!
+  loan(id: ID!): Loan!
   payments: [Payment!]!
-  payment(id: Int!): Payment!
+  payment(id: ID!): Payment!
 }
 
 type Mutation {
   createBorrower(createBorrowerInput: CreateBorrowerInput!): Borrower!
-  updateBorrower(updateBorrowerInput: UpdateBorrowerInput!): Borrower!
-  removeBorrower(id: Int!): Borrower!
+  updateBorrower(updateBorrowerInput: UpdateBorrowerInput!, id: ID!): Borrower!
+  removeBorrower(id: ID!): Borrower!
   createLoan(createLoanInput: CreateLoanInput!): Loan!
-  updateLoan(updateLoanInput: UpdateLoanInput!): Loan!
-  removeLoan(id: Int!): Loan!
+  updateLoan(updateLoanInput: UpdateLoanInput!, id: ID!): Loan!
+  removeLoan(id: ID!): Loan!
   createPayment(createPaymentInput: CreatePaymentInput!): Payment!
-  updatePayment(updatePaymentInput: UpdatePaymentInput!): Payment!
-  removePayment(id: Int!): Payment!
+  updatePayment(updatePaymentInput: UpdatePaymentInput!, id: ID!): Payment!
+  removePayment(id: ID!): Payment!
 }
 
 input CreateBorrowerInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  phoneNumber: String
+  score: Float
 }
 
 input UpdateBorrowerInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  name: String
+  phoneNumber: String
+  score: Float
 }
 
 input CreateLoanInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  borrowerId: ID!
+  amount: Float!
+  interestRate: Float!
+  startDate: String!
+  dueDate: String!
 }
 
 input UpdateLoanInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  borrowerId: ID
+  amount: Float
+  interestRate: Float
+  startDate: String
+  dueDate: String
 }
 
 input CreatePaymentInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  loanId: ID!
+  amountPaid: Float!
+  paymentDate: String!
 }
 
 input UpdatePaymentInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  loanId: ID
+  amountPaid: Float
+  paymentDate: String
 }
