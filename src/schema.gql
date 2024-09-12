@@ -1,0 +1,91 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Payment {
+  id: ID!
+  loan: Loan!
+  amountPaid: Float!
+  paymentDate: DateTime!
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Loan {
+  id: ID!
+  borrower: Borrower!
+  amount: Float!
+  interestRate: Float!
+  startDate: DateTime!
+  dueDate: DateTime!
+  status: String!
+  createdAt: DateTime!
+  payments: [Payment!]!
+}
+
+type Borrower {
+  id: ID!
+  name: String!
+  phoneNumber: String!
+  score: Float!
+  createdAt: DateTime!
+  loans: [Loan!]!
+}
+
+type Query {
+  borrowers: [Borrower!]!
+  borrower(id: Int!): Borrower!
+  loans: [Loan!]!
+  loan(id: Int!): Loan!
+  payments: [Payment!]!
+  payment(id: Int!): Payment!
+}
+
+type Mutation {
+  createBorrower(createBorrowerInput: CreateBorrowerInput!): Borrower!
+  updateBorrower(updateBorrowerInput: UpdateBorrowerInput!): Borrower!
+  removeBorrower(id: Int!): Borrower!
+  createLoan(createLoanInput: CreateLoanInput!): Loan!
+  updateLoan(updateLoanInput: UpdateLoanInput!): Loan!
+  removeLoan(id: Int!): Loan!
+  createPayment(createPaymentInput: CreatePaymentInput!): Payment!
+  updatePayment(updatePaymentInput: UpdatePaymentInput!): Payment!
+  removePayment(id: Int!): Payment!
+}
+
+input CreateBorrowerInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateBorrowerInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateLoanInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateLoanInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreatePaymentInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdatePaymentInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
